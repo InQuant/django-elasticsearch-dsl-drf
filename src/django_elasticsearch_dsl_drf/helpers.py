@@ -9,8 +9,6 @@ from elasticsearch_dsl import Search
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl.query import MoreLikeThis
 
-from six import PY3
-
 from .versions import ELASTICSEARCH_GTE_7_0
 
 __title__ = 'django_elasticsearch_dsl_drf.helpers'
@@ -51,7 +49,7 @@ def get_index_and_mapping_for_model(model):
     if document is not None:
         return (
             document._index._name,
-            document._doc_type.mapping.properties.name
+            document._index._name
         )
 
 
@@ -71,17 +69,11 @@ def sort_by_list(unsorted_dict, sorted_keys):
             set(__unsorted_dict_keys) - set(sorted_keys)
         )
     )
-    if PY3:
-        for key in __sorted_keys:
-            if key in unsorted_dict:
-                unsorted_dict.move_to_end(key)
+    for key in __sorted_keys:
+        if key in unsorted_dict:
+            unsorted_dict.move_to_end(key)
 
-        return unsorted_dict
-    else:
-        sorted_dict = OrderedDict(
-            (key, unsorted_dict[key]) for key in __sorted_keys
-        )
-        return sorted_dict
+    return unsorted_dict
 
 
 def more_like_this(obj,

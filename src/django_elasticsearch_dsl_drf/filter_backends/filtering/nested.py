@@ -6,8 +6,6 @@ from elasticsearch_dsl.query import Q
 from django.core.exceptions import ImproperlyConfigured
 from django_elasticsearch_dsl import fields
 
-from six import string_types
-
 from ...constants import (
     ALL_LOOKUP_FILTERS_AND_QUERIES,
     LOOKUP_FILTER_TERMS,
@@ -89,7 +87,7 @@ class NestedFilteringFilterBackend(FilteringFilterBackend):
         filter_fields = view.nested_filter_fields
 
         for field, options in filter_fields.items():
-            if options is None or isinstance(options, string_types):
+            if options is None or isinstance(options, str):
                 filter_fields[field] = {
                     'field': options or field
                 }

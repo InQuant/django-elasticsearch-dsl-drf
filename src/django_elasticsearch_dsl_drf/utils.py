@@ -3,7 +3,7 @@ Utils.
 """
 
 import datetime
-from elasticsearch_dsl.search import AggsProxy
+from elasticsearch_dsl import Search as _Search
 
 
 __title__ = 'django_elasticsearch_dsl_drf.utils'
@@ -20,7 +20,7 @@ class EmptySearch(object):
     """Empty Search."""
 
     def __init__(self, *args, **kwargs):
-        self.aggs = AggsProxy('')
+        self.aggs = _Search().aggs
         self._highlight = {}
         self._sort = []
         self.total = 0

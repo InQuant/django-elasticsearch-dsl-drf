@@ -4,7 +4,7 @@ Test ordering backend.
 
 from __future__ import absolute_import
 
-from six.moves import reduce
+from functools import reduce
 
 import unittest
 

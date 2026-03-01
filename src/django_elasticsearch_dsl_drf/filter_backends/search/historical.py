@@ -9,7 +9,7 @@ from django_elasticsearch_dsl import fields
 from elasticsearch_dsl.query import Q
 from rest_framework.filters import BaseFilterBackend
 from rest_framework.settings import api_settings
-import six
+from functools import reduce
 
 from ..mixins import FilterBackendMixin
 from ...compat import coreapi, coreschema
@@ -141,7 +141,7 @@ class SearchFilterBackend(BaseFilterBackend, FilterBackendMixin):
                     Q(
                         "nested",
                         path=path,
-                        query=six.moves.reduce(operator.or_, queries)
+                        query=reduce(operator.or_, queries)
                     )
                 )
 

@@ -16,9 +16,6 @@ from rest_framework import serializers
 from rest_framework.fields import empty
 from rest_framework.utils.field_mapping import get_field_kwargs
 
-import six
-
-
 from .fields import (
     BooleanField,
     CharField,
@@ -101,9 +98,7 @@ class DocumentSerializerMeta(serializers.SerializerMetaclass):
         return cls
 
 
-class DocumentSerializer(
-    six.with_metaclass(DocumentSerializerMeta, serializers.Serializer)
-):
+class DocumentSerializer(serializers.Serializer, metaclass=DocumentSerializerMeta):
     """A dynamic DocumentSerializer class."""
 
     _abstract = True
@@ -202,7 +197,7 @@ class DocumentSerializer(
         if __fields == "__all__":
             __fields = ()
 
-        for field_name, field_type in six.iteritems(document_fields):
+        for field_name, field_type in document_fields.items():
             orig_name = field_name[:]
 
             # Don't use this field if it is in `ignore_fields`

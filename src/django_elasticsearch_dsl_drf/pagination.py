@@ -15,8 +15,6 @@ from rest_framework import pagination
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
-import six
-
 from .versions import ELASTICSEARCH_GTE_6_0
 
 __title__ = 'django_elasticsearch_dsl_drf.pagination'
@@ -194,7 +192,7 @@ class PageNumberPagination(pagination.PageNumberPagination, GetCountMixin):
             self.page = paginator.page(page_number)
         except django_paginator.InvalidPage as exc:
             msg = self.invalid_page_message.format(
-                page_number=page_number, message=six.text_type(exc)
+                page_number=page_number, message=str(exc)
             )
             raise NotFound(msg)
 
@@ -309,7 +307,7 @@ class QueryFriendlyPageNumberPagination(PageNumberPagination):
             self.page = paginator.page(page_number)
         except django_paginator.InvalidPage as exc:
             msg = self.invalid_page_message.format(
-                page_number=page_number, message=six.text_type(exc)
+                page_number=page_number, message=str(exc)
             )
             raise NotFound(msg)
 

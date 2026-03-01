@@ -161,11 +161,10 @@ class BaseDocumentViewSet(ReadOnlyModelViewSet):
                 self.document._get_using()
             )
             self.index = self.document._index._name
-            self.mapping = self.document._doc_type.mapping.properties.name
+            self.mapping = self.document._index._name
             self.search = Search(
                 using=self.client,
                 index=self.index,
-                doc_type=self.document._doc_type.name
             )
 
         super(BaseDocumentViewSet, self).__init__(*args, **kwargs)
