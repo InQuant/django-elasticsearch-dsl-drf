@@ -67,7 +67,7 @@ Example:
     >>>
     >>>         model = Publisher  # The model associate with this Document
 """
-from elasticsearch_dsl.search import AggsProxy
+from elasticsearch_dsl import Search as _Search
 
 from django_elasticsearch_dsl_drf.constants import (
     FUNCTIONAL_SUGGESTER_TERM_MATCH,
@@ -394,7 +394,7 @@ class FunctionalSuggesterFilterBackend(BaseFilterBackend, FilterBackendMixin):
         :param queryset:
         :return:
         """
-        queryset.aggs = AggsProxy('')
+        queryset.aggs = _Search().aggs
         queryset._highlight = {}
         queryset._sort = ['_score']
         queryset._functional_suggest = True
